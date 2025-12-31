@@ -26,22 +26,24 @@ export default function Login() {
         </div>
         <div>
           <h2 className="text-2xl text-center font-bold">Login</h2>
-          <Input
-            label="Email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            label="Password"
-            placeholder="Enter your password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button loading={false} onClick={handleSubmit}>
-            Login
-          </Button>
+          <form onSubmit={handleSubmit}>
+            <Input
+              label="Email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              label="Password"
+              placeholder="Enter your password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" loading={false}>
+              Login
+            </Button>
+          </form>
         </div>
       </div>
     </div>
