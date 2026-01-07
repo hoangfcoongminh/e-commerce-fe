@@ -1,3 +1,4 @@
+import type { Gender } from "./gender";
 import type { Role } from "./role";
 import type { User } from "./user";
 
@@ -11,8 +12,8 @@ export interface RegisterRequest {
   password: string;
   fullName: string;
   phoneNumber: string;
-  address: string;
-  gender: string;
+  address: string | null;
+  gender: Gender | null;
   role: Role;
 }
 

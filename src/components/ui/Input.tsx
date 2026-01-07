@@ -6,7 +6,7 @@ export function Input({ label, className = "", ...props }: Props) {
   return (
     <div className="mb-6">
       <div className="w-max-content mb-1">
-        <label>{label}</label>
+        <label>{label}{props.required && <span className="text-red-500">*</span>}</label>
       </div>
       <div>
         <input
