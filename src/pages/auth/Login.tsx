@@ -4,6 +4,7 @@ import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ export default function Login() {
   const error = useAppSelector((state) => state.auth.error);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -23,6 +25,9 @@ export default function Login() {
     try {
       await dispatch(login({ email, password })).unwrap();
       toast.success("Login successful!");
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
     } catch (err) {}
   };
   return (
@@ -60,12 +65,9 @@ export default function Login() {
           </form>
           <div className="mt-4 text-center flex flex-row justify-center gap-2">
             <p>Don't have an account?</p>
-            <a
-              href="/register"
-              className="font-semibold text-blue-500 hover:text-blue-700"
-            >
+            <Link to="/register" className="font-semibold text-blue-500 hover:text-blue-700">
               Register
-            </a>
+            </Link>
           </div>
         </div>
       </div>

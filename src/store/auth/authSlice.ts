@@ -1,17 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { User } from "../../types/user";
-import type {
-  AuthResponse,
-  LoginRequest,
-  RegisterRequest,
-} from "../../types/auth";
+import type { AuthResponse, LoginRequest, RegisterRequest } from "../../types/auth";
 import { authService } from "../../services/auth.service";
+import type { Gender } from "../../types/gender";
+import { Role } from "../../types/role";
 
 interface AuthState {
   user: User | null;
   token: string | null;
   refreshToken: string | null;
-  //   isAuthenticated: boolean;
+  isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -20,19 +18,23 @@ const initialState: AuthState = {
   user: null,
   token: null,
   refreshToken: null,
-  //   isAuthenticated: false,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
 
 export const login = createAsyncThunk<
   AuthResponse,
-  LoginRequest,
+  { email: string; password: string },
   { rejectValue: any }
->("auth/login", async (data, { rejectWithValue }) => {
+>("auth/login", async ({ email, password }, { rejectWithValue }) => {
+  const payload: LoginRequest = {
+    email,
+    password,
+  };
   try {
-    const response = await authService.login(data);
-    return response.data;
+    const response = await authService.login(payload);
+    return response.data.data;
   } catch (error: any) {
     if (error.response && error.response.data) {
       return rejectWithValue(error.response.data);
@@ -43,19 +45,41 @@ export const login = createAsyncThunk<
 
 export const register = createAsyncThunk<
   AuthResponse,
-  RegisterRequest,
+  {
+    email: string;
+    password: string;
+    fullName: string;
+    phoneNumber: string;
+    address: string;
+    gender: Gender | null;
+  },
   { rejectValue: any }
->("auth/register", async (data, { rejectWithValue }) => {
-  try {
-    const response = await authService.register(data);
-    return response.data;
-  } catch (error: any) {
-    if (error.response && error.response.data) {
-      return rejectWithValue(error.response.data);
+>(
+  "auth/register",
+  async ({ email, password, fullName, phoneNumber, address, gender }, { rejectWithValue }) => {
+    const payload: RegisterRequest = {
+      email,
+      password,
+      fullName,
+      phoneNumber,
+      address,
+      gender,
+      role: Role.USER,
+    };
+
+    try {
+      const response = await authService.register(payload);
+      return response.data.data;
+    } catch (error: any) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data);
+      }
+      return rejectWithValue({
+        message: error.message || "Registration failed",
+      });
     }
-    return rejectWithValue({ message: error.message || "Registration failed" });
   }
-});
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -65,7 +89,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.refreshToken = null;
-      // state.isAuthenticated = false;
+      state.isAuthenticated = false;
       localStorage.clear();
     },
   },
@@ -81,6 +105,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
+        state.isAuthenticated = true;
 
         localStorage.setItem("token", action.payload.token);
         localStorage.setItem("refreshToken", action.payload.refreshToken);
@@ -110,6 +135,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.refreshToken = action.payload.refreshToken;
+        state.isAuthenticated = true;
 
         localStorage.setItem("token", action.payload.token);
         localStorage.setItem("refreshToken", action.payload.refreshToken);
