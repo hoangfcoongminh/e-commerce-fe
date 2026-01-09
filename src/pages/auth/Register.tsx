@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import { toast } from "react-toastify";
@@ -50,17 +50,19 @@ export default function Register() {
       setTimeout(() => {
         navigate("/home");
       }, 2000);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex shadow-2xl rounded-xl overflow-hidden border">
+    <div className="flex justify-center mt-4">
+      <div className="flex shadow-2xl rounded-xl justify-evenly overflow-hidden">
         <div className="w-full max-w-md bg-white rounded-xl p-8">
-          <h2 className="text-3xl font-bold text-center mb-6 text-purple-700">
-            Đăng ký tài khoản
+          <h2 className="text-5xl font-bold text-center mb-6 text-[var(--color-secondary)]">
+            Đăng ký
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 flex flex-col items-center">
             <Input
               label="Tên người dùng"
               placeholder="Nhập tên của bạn"
@@ -92,28 +94,36 @@ export default function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
 
-            <div>
+            <div className="w-70">
               <label className="block mb-1">Giới tính</label>
-              <input
-                type="radio"
-                id="male"
-                name="gender"
-                value={Gender.MALE}
-                checked={gender === Gender.MALE}
-                onChange={() => setGender(Gender.MALE)}
-              />
-              <label htmlFor="male" className="mr-4">
-                Nam
-              </label>
-              <input
-                type="radio"
-                id="female"
-                name="gender"
-                value={Gender.FEMALE}
-                checked={gender === Gender.FEMALE}
-                onChange={() => setGender(Gender.FEMALE)}
-              />
-              <label htmlFor="female">Nữ</label>
+              <div className="flex justify-evenly">
+                <div>
+                  <input
+                    type="radio"
+                    id="male"
+                    name="gender"
+                    value={Gender.MALE}
+                    checked={gender === Gender.MALE}
+                    onChange={() => setGender(Gender.MALE)}
+                  />
+                  <label htmlFor="male" className="ml-1 mr-4">
+                    Nam
+                  </label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="female"
+                    name="gender"
+                    value={Gender.FEMALE}
+                    checked={gender === Gender.FEMALE}
+                    onChange={() => setGender(Gender.FEMALE)}
+                  />
+                  <label htmlFor="female" className="ml-1">
+                    Nữ
+                  </label>
+                </div>
+              </div>
             </div>
 
             <Input
@@ -144,20 +154,19 @@ export default function Register() {
           </form>
           <div className="mt-4 text-center flex flex-row justify-center gap-2">
             <p>Already have an account?</p>
-            <Link
-              to="/login"
-              className="font-semibold text-green-500 hover:text-green-700"
-            >
+            <Link to="/login" className="font-semibold text-[var(--color-secondary)] hover:text-green-700">
               Login
             </Link>
           </div>
         </div>
-        <div className="relative p-8">
-          <h2 className="absolute inset-0 right-8 text-right text-2xl font-bold">ORDER</h2>
+        <div className="relative p-8 flex items-center bg-gradient-to-br from-purple-200 to-blue-200">
+          <h2 className="absolute inset-8 right-8 text-right text-5xl font-bold text-[var(--color-secondary)]">
+            ORDER
+          </h2>
           <img
             src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt=""
-            className="w-200 h-full object-cover rounded-md"
+            className="h-150 object-cover rounded-md"
           />
         </div>
       </div>

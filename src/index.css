@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+:root {
+  --color-primary: rgb(17, 110, 51);
+  --color-secondary: rgb(40, 145, 78);
+
+  --color-button-bg: rgb(10, 131, 54);
+  --color-button-border: rgb(7, 95, 39);
+  --color-button-bg-hover: rgb(8, 104, 43);
+
+  --color-accent: rgb(123, 232, 207);
+
+  --color-text: white;
+  --color-text-hv: #FF7F50;
+
+  --color-bg: white;
+
+  --color-border: rgb(229, 231, 235);
+
+  --font-sans: "Inter", system-ui, sans-serif;
+}

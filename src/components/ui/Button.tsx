@@ -5,7 +5,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export function Button({ loading, children, className = "", ...props }: Props) {
   return (
     <button
-      className={`py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700 hover:cursor-pointer ${className}`}
+      className={`py-2 px-4 bg-[var(--color-button-bg)] text-white rounded hover:bg-[var(--color-button-bg-hover)] hover:cursor-pointer ${className}`}
       {...props}
       disabled={loading || props.disabled}
     >
