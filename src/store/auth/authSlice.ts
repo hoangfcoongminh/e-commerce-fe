@@ -39,7 +39,7 @@ export const login = createAsyncThunk<
     if (error.response && error.response.data) {
       return rejectWithValue(error.response.data);
     }
-    return rejectWithValue({ message: error.message || "Login failed" });
+    return rejectWithValue("Login failed");
   }
 });
 
@@ -74,9 +74,7 @@ export const register = createAsyncThunk<
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data);
       }
-      return rejectWithValue({
-        message: error.message || "Registration failed",
-      });
+      return rejectWithValue("Registration failed");
     }
   }
 );
