@@ -1,23 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { FaUser } from "react-icons/fa";
 import { logout } from "../../store/auth/authSlice";
 import { toast } from "react-toastify";
 import { LuShoppingCart, LuUser } from "react-icons/lu";
 import { Search } from "../ui/Search";
-import CategoryLanding from "../CategoryLanding";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const categoryArray = [
-    "Sản phẩm",
-    "Bộ sưu tập",
-    "Khuyến mãi",
-    "Tin tức",
-    "Giới thiệu",
-    "Liên hệ",
-  ];
+
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const user = useAppSelector((state) => state.auth.user);
 
@@ -99,7 +90,6 @@ export const Header = () => {
           </button>
         </div>
       </header>
-      <CategoryLanding />
     </>
   );
 };

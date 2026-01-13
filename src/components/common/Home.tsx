@@ -10,7 +10,7 @@ export const Home = () => {
         />
         <div className="relative z-10 text-center">
           <h1 className="text-5xl font-extrabold text-white drop-shadow mb-4">
-            Thời Trang Đỉnh Cao
+            Thời Trang
           </h1>
           <p className="text-xl text-white mb-6">
             Khám phá bộ sưu tập mới nhất, phong cách trẻ trung, hiện đại!
