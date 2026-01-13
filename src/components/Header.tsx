@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { logout } from "../../store/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { logout } from "../store/auth/authSlice";
 import { toast } from "react-toastify";
 import { LuShoppingCart, LuUser } from "react-icons/lu";
-import { Search } from "../ui/Search";
+import { Search } from "./ui/Search";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ export const Header = () => {
       <header className="w-full h-20 bg-[var(--color-bg)] shadow-md py-4 px-8 flex items-center justify-around fixed z-1000">
         {/* Logo */}
         <Link to="/home" className="flex items-center gap-2">
-          <img src="./src/assets/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
+          <img src="./src/assets/logo2.png" alt="Logo" className="w-10 h-10 object-contain" />
           <span className="text-3xl font-medium text-[var(--color-primary)] tracking-wide">
             ORDER
           </span>
