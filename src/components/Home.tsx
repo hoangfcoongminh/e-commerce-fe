@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
+import { ProductCard } from "./ProductCart";
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
+}
 
 export const Home = () => {
   const categoryCards: CategoryCard[] = [
@@ -30,6 +38,73 @@ export const Home = () => {
       image:
         "https://images.unsplash.com/photo-1758782213532-bbb5fd89885e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxraWRzJTIwZmFzaGlvbiUyMGNsb3RoaW5nfGVufDF8fHx8MTc2ODE1MDIyNXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       itemCount: 128,
+    },
+  ];
+
+  const products: Product[] = [
+    {
+      id: 1,
+      name: "Elegant Evening Dress",
+      price: 299,
+      image:
+        "https://images.unsplash.com/photo-1557161622-5f50ca344787?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwZHJlc3MlMjBmYXNoaW9ufGVufDF8fHx8MTc2ODA2Nzc1NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Dresses",
+    },
+    {
+      id: 2,
+      name: "Designer Wool Coat",
+      price: 489,
+      image:
+        "https://images.unsplash.com/photo-1755214832310-074c4cc45372?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNpZ25lciUyMGNvYXQlMjBmYXNoaW9ufGVufDF8fHx8MTc2ODE4NDQwOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Outerwear",
+    },
+    {
+      id: 3,
+      name: "Luxury Cashmere Sweater",
+      price: 259,
+      image:
+        "https://images.unsplash.com/photo-1766558305036-41c4e84a6379?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzd2VhdGVyJTIwY2xvdGhpbmd8ZW58MXx8fHwxNzY4MTg1NjIyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Knitwear",
+    },
+    {
+      id: 4,
+      name: "Tailored Trousers",
+      price: 189,
+      image:
+        "https://images.unsplash.com/photo-1721917113663-a4f26e197132?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNpZ25lciUyMHBhbnRzJTIwdHJvdXNlcnN8ZW58MXx8fHwxNzY4MTg1NjIyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Bottoms",
+    },
+    {
+      id: 5,
+      name: "Classic Silk Blazer",
+      price: 399,
+      image:
+        "https://images.unsplash.com/flagged/photo-1553802922-e345434156e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwYmxhemVyJTIwamFja2V0fGVufDF8fHx8MTc2ODE4NTYyM3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Blazers",
+    },
+    {
+      id: 6,
+      name: "Signature Evening Dress",
+      price: 349,
+      image:
+        "https://images.unsplash.com/photo-1557161622-5f50ca344787?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwZHJlc3MlMjBmYXNoaW9ufGVufDF8fHx8MTc2ODA2Nzc1NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Dresses",
+    },
+    {
+      id: 7,
+      name: "Premium Leather Jacket",
+      price: 599,
+      image:
+        "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZW4lMjBmYXNoaW9uJTIwamFja2V0fGVufDF8fHx8MTc2ODE0NjMwMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Jackets",
+    },
+    {
+      id: 8,
+      name: "Designer Handbag",
+      price: 449,
+      image:
+        "https://images.unsplash.com/photo-1575201046471-082b5c1a1e79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwYWNjZXNzb3JpZXMlMjBsdXh1cnl8ZW58MXx8fHwxNzY4MTMyMzMyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      category: "Accessories",
     },
   ];
 
@@ -111,26 +186,32 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* Lợi ích */}
-      <div className="bg-white py-12">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div>
-            <div className="text-4xl mb-2">🚚</div>
-            <h4 className="font-bold mb-1">Giao hàng nhanh</h4>
-            <p>Miễn phí vận chuyển cho đơn hàng từ 500K</p>
+      {/* Product */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl mb-4 tracking-tight" style={{ color: "#116E33" }}>
+              Featured Collection
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Explore our handpicked selection of premium clothing crafted with exceptional
+              attention to detail.
+            </p>
           </div>
-          <div>
-            <div className="text-4xl mb-2">🔒</div>
-            <h4 className="font-bold mb-1">Thanh toán an toàn</h4>
-            <p>Bảo mật tuyệt đối, nhiều hình thức thanh toán</p>
-          </div>
-          <div>
-            <div className="text-4xl mb-2">💬</div>
-            <h4 className="font-bold mb-1">Hỗ trợ 24/7</h4>
-            <p>Đội ngũ CSKH luôn sẵn sàng giải đáp</p>
+
+          {/* Product Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                // onAddToCart={onAddToCart}
+              />
+            ))}
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
