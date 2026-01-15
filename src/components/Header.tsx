@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { logout } from "../store/auth/authSlice";
+import { logout } from "../store/authSlice";
 import { toast } from "react-toastify";
 import { LuShoppingCart, LuUser } from "react-icons/lu";
 import { Search } from "./ui/Search";
@@ -26,7 +26,7 @@ export const Header = () => {
   };
   return (
     <>
-      <header className="w-full h-20 bg-[var(--color-bg)] shadow-md py-4 px-8 flex items-center justify-around fixed z-1000">
+      <header className="w-full h-20 bg-[var(--color-bg)] border border-gray-200 py-4 px-8 flex items-center justify-around fixed z-1000">
         {/* Logo */}
         <Link to="/home" className="flex items-center gap-2">
           <img src="./src/assets/logo2.png" alt="Logo" className="w-10 h-10 object-contain" />

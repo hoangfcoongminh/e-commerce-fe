@@ -4,5 +4,4 @@ export interface SubCategory {
   name: string;
   description: string;
   slug: string;
-  status: number;
 }

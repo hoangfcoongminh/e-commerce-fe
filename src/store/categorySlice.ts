@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { Category } from "../types/category";
 import { categoryService } from "../services/category.service";
+import type { ApiError, ApiResponse } from "../types/api";
 
 interface CategoryState {
   items: Category[];
@@ -14,34 +15,28 @@ const initialState: CategoryState = {
   error: null,
 };
 
-export const fetchAllCategories = createAsyncThunk<Category[], void, { rejectValue: any }>(
+export const fetchAllCategories = createAsyncThunk<ApiResponse<Category[]>, void, { rejectValue: ApiError }>(
   "categories/fetchAll",
   async (_, { rejectWithValue }) => {
     try {
       const response = await categoryService.getAll();
-      return response.data.data;
+      return response.data;
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        return rejectWithValue(error.response.data);
-      }
-      return rejectWithValue("An unknown error occurred");
+      return rejectWithValue(error.response.data as ApiError);
     }
   }
 );
 
 export const fetchAllCategoriesWithSubCategories = createAsyncThunk<
-  Category[],
+  ApiResponse<Category[]>,
   void,
-  { rejectValue: any }
+  { rejectValue: ApiError }
 >("categories/fetchAllWithSubCategories", async (_, { rejectWithValue }) => {
   try {
     const response = await categoryService.getAllWithSubCategories();
-    return response.data.data;
+    return response.data;
   } catch (error: any) {
-    if (error.response && error.response.data) {
-      return rejectWithValue(error.response.data);
-    }
-    return rejectWithValue("An unknown error occurred");
+    return rejectWithValue(error.response.data as ApiError);
   }
 });
 
@@ -63,11 +58,16 @@ const categorySlice = createSlice({
       })
       .addCase(fetchAllCategories.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        state.items = action.payload.data;
       })
-      .addCase(fetchAllCategories.rejected, (state) => {
+      .addCase(fetchAllCategories.rejected, (state, action) => {
         state.loading = false;
-        state.error = "An unknown error occurred";
+        const err = action.payload;
+        if (err) {
+          state.error = err.message;
+        } else {
+          state.error = "An unknown error occurred.";
+        }
       })
 
       .addCase(fetchAllCategoriesWithSubCategories.pending, (state) => {
@@ -76,13 +76,16 @@ const categorySlice = createSlice({
       })
       .addCase(fetchAllCategoriesWithSubCategories.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("Fetched categories with sub-categories:", action.payload);
-
-        state.items = action.payload;
+        state.items = action.payload.data;
       })
-      .addCase(fetchAllCategoriesWithSubCategories.rejected, (state) => {
+      .addCase(fetchAllCategoriesWithSubCategories.rejected, (state, action) => {
         state.loading = false;
-        state.error = "An unknown error occurred";
+        const err = action.payload;
+        if (err) {
+          state.error = err.message;
+        } else {
+          state.error = "An unknown error occurred.";
+        }
       });
   },
 });
