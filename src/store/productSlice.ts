@@ -5,14 +5,14 @@ import type { Pagination } from "../types/pagination";
 import type { FilterRequestArgs, Product } from "../types/product";
 
 interface ProductState {
-  items: Product[];
+  products: Product[];
   loading: boolean;
   error: string | null;
   pagination: Pagination;
 }
 
 const initialState: ProductState = {
-  items: [],
+  products: [],
   loading: false,
   error: null,
   pagination: {
@@ -42,7 +42,7 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     clearProducts(state) {
-      state.items = [];
+      state.products = [];
       state.pagination = initialState.pagination;
       state.loading = false;
       state.error = null;
@@ -56,15 +56,11 @@ const productSlice = createSlice({
       })
       .addCase(filterProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.data;
+        state.products = action.payload.data;
       })
       .addCase(filterProducts.rejected, (state, action) => {
         state.loading = false;
-        if (action.payload) {
-          state.error = action.payload.message;
-        } else {
-          state.error = "An unknown error occurred";
-        }
+        state.error = action.payload ? action.payload.message : "An unknown error occurred.";
       });
   },
 });

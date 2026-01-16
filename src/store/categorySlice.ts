@@ -4,28 +4,29 @@ import { categoryService } from "../services/category.service";
 import type { ApiError, ApiResponse } from "../types/api";
 
 interface CategoryState {
-  items: Category[];
+  categories: Category[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: CategoryState = {
-  items: [],
+  categories: [],
   loading: false,
   error: null,
 };
 
-export const fetchAllCategories = createAsyncThunk<ApiResponse<Category[]>, void, { rejectValue: ApiError }>(
-  "categories/fetchAll",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await categoryService.getAll();
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.data as ApiError);
-    }
+export const fetchAllCategories = createAsyncThunk<
+  ApiResponse<Category[]>,
+  void,
+  { rejectValue: ApiError }
+>("categories/fetchAll", async (_, { rejectWithValue }) => {
+  try {
+    const response = await categoryService.getAll();
+    return response.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data as ApiError);
   }
-);
+});
 
 export const fetchAllCategoriesWithSubCategories = createAsyncThunk<
   ApiResponse<Category[]>,
@@ -45,7 +46,7 @@ const categorySlice = createSlice({
   initialState,
   reducers: {
     clearCategories(state) {
-      state.items = [];
+      state.categories = [];
       state.loading = false;
       state.error = null;
     },
@@ -58,7 +59,7 @@ const categorySlice = createSlice({
       })
       .addCase(fetchAllCategories.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.data;
+        state.categories = action.payload.data;
       })
       .addCase(fetchAllCategories.rejected, (state, action) => {
         state.loading = false;
@@ -76,16 +77,11 @@ const categorySlice = createSlice({
       })
       .addCase(fetchAllCategoriesWithSubCategories.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.data;
+        state.categories = action.payload.data;
       })
       .addCase(fetchAllCategoriesWithSubCategories.rejected, (state, action) => {
         state.loading = false;
-        const err = action.payload;
-        if (err) {
-          state.error = err.message;
-        } else {
-          state.error = "An unknown error occurred.";
-        }
+        state.error = action.payload ? action.payload.message : "An unknown error occurred.";
       });
   },
 });

@@ -1,17 +1,39 @@
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
-import { ProductCard } from "./ProductCart";
+import { ProductCard } from "./ProductCard";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { useEffect } from "react";
 import { filterProducts } from "../store/productSlice";
+import { fetchAllSubCategories } from "../store/subCategorySlice";
+import type { Image } from "../types/image";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
-  const { items, error, loading, pagination } = useAppSelector((state) => state.products);
+  const { products, error, loading, pagination } = useAppSelector((state) => state.products);
+  const subCategories = useAppSelector((state) => state.subCategories.subCategories);
 
   useEffect(() => {
-    dispatch(filterProducts({ page: 0, size: 8, sort: "id,DESC", body: { subCategoryIds: null, keyword: null, minPrice: null, maxPrice: null } }));
+    dispatch(
+      filterProducts({
+        page: 0,
+        size: 8,
+        sort: "id,DESC",
+        body: { subCategoryIds: null, keyword: null, minPrice: null, maxPrice: null },
+      }),
+    );
+    dispatch(fetchAllSubCategories());
   }, [dispatch]);
+
+  const productsWithImages = products.map(p => ({
+  ...p,
+  images: [
+    {
+      id: 0,
+      url: "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZW4lMjBmYXNoaW9uJTIwamFja2V0fGVufDF8fHx8MTc2ODE0NjMwMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      isPrimary: true
+    }
+  ]
+}));
 
   const categoryCards: CategoryCard[] = [
     {
@@ -43,9 +65,6 @@ export const Home = () => {
       itemCount: 128,
     },
   ];
-
-  console.log("Items: ", items);
-  
 
   return (
     <div className="min-h-screen">
@@ -140,15 +159,25 @@ export const Home = () => {
           </div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {items.map((product) => (
+          {loading ? (
+            <div className="flex items-center justify-center py-6">
+              <div className="flex items-center gap-3 text-gray-500">
+                <div className="h-5 w-5 rounded-full border-2 border-[var(--color-primary)] border-t-transparent animate-spin" />
+                <span className="text-sm tracking-wide">Đang tải ...</span>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {productsWithImages.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
+                subCategories={subCategories || []}
                 // onAddToCart={onAddToCart}
               />
             ))}
           </div>
+          )}
         </div>
       </section>
     </div>
