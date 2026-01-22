@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { User } from "../../types/user";
-import type { AuthResponse, LoginRequest, RegisterRequest } from "../../types/auth";
-import { authService } from "../../services/auth.service";
-import type { Gender } from "../../types/gender";
-import { Role } from "../../types/role";
+import type { User } from "../types/user";
+import type { AuthResponse, LoginRequest, RegisterRequest } from "../types/auth";
+import { authService } from "../services/auth.service";
+import type { Gender } from "../types/gender";
+import { Role } from "../types/role";
+import type { ApiError, ApiResponse } from "../types/api";
 
 interface AuthState {
   user: User | null;
@@ -24,9 +25,9 @@ const initialState: AuthState = {
 };
 
 export const login = createAsyncThunk<
-  AuthResponse,
+  ApiResponse<AuthResponse>,
   { email: string; password: string },
-  { rejectValue: any }
+  { rejectValue: ApiError }
 >("auth/login", async ({ email, password }, { rejectWithValue }) => {
   const payload: LoginRequest = {
     email,
@@ -34,17 +35,14 @@ export const login = createAsyncThunk<
   };
   try {
     const response = await authService.login(payload);
-    return response.data.data;
+    return response.data;
   } catch (error: any) {
-    if (error.response && error.response.data) {
-      return rejectWithValue(error.response.data);
-    }
-    return rejectWithValue({ message: error.message || "Login failed" });
+    return rejectWithValue(error.response.data as ApiError);
   }
 });
 
 export const register = createAsyncThunk<
-  AuthResponse,
+  ApiResponse<AuthResponse>,
   {
     email: string;
     password: string;
@@ -53,7 +51,7 @@ export const register = createAsyncThunk<
     address: string;
     gender: Gender | null;
   },
-  { rejectValue: any }
+  { rejectValue: ApiError }
 >(
   "auth/register",
   async ({ email, password, fullName, phoneNumber, address, gender }, { rejectWithValue }) => {
@@ -69,16 +67,11 @@ export const register = createAsyncThunk<
 
     try {
       const response = await authService.register(payload);
-      return response.data.data;
+      return response.data;
     } catch (error: any) {
-      if (error.response && error.response.data) {
-        return rejectWithValue(error.response.data);
-      }
-      return rejectWithValue({
-        message: error.message || "Registration failed",
-      });
+      return rejectWithValue(error.response.data as ApiError);
     }
-  }
+  },
 );
 
 const authSlice = createSlice({
@@ -102,26 +95,28 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.refreshToken = action.payload.refreshToken;
+        const data = action.payload.data;
+        state.user = data.user;
+        state.token = data.token;
+        state.refreshToken = data.refreshToken;
         state.isAuthenticated = true;
 
-        localStorage.setItem("token", action.payload.token);
-        localStorage.setItem("refreshToken", action.payload.refreshToken);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("refreshToken", data.refreshToken);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        if (action.payload) {
-          if (action.payload.errors) {
-            state.error = Object.values(action.payload.errors)
+        const err = action.payload;
+        if (err) {
+          if (err.errors) {
+            state.error = Object.values(err.errors)
               .map((msg) => `- ${msg}`)
               .join("\n");
           } else {
-            state.error = action.payload.message || "Login failed";
+            state.error = err.message || "Login failed";
           }
         } else {
-          state.error = action.error.message || "Login failed";
+          state.error = "Login failed";
         }
       })
 
@@ -132,26 +127,28 @@ const authSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.refreshToken = action.payload.refreshToken;
+        const data = action.payload.data;
+        state.user = data.user;
+        state.token = data.token;
+        state.refreshToken = data.refreshToken;
         state.isAuthenticated = true;
 
-        localStorage.setItem("token", action.payload.token);
-        localStorage.setItem("refreshToken", action.payload.refreshToken);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("refreshToken", data.refreshToken);
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
-        if (action.payload) {
-          if (action.payload.errors) {
-            state.error = Object.values(action.payload.errors)
+        const err = action.payload;
+        if (err) {
+          if (err.errors) {
+            state.error = Object.values(err.errors)
               .map((msg) => `- ${msg}`)
               .join("\n");
           } else {
-            state.error = action.payload.message || "Registration failed";
+            state.error = err.message || "Registration failed";
           }
         } else {
-          state.error = action.error.message || "Registration failed";
+          state.error = "Registration failed";
         }
       });
   },

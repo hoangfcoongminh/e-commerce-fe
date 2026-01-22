@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { login } from "../../store/auth/authSlice";
+import { login } from "../../store/authSlice";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";

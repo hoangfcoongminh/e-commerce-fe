@@ -3,7 +3,7 @@ import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { register } from "../../store/auth/authSlice";
+import { register } from "../../store/authSlice";
 import { Gender } from "../../types/gender";
 import { Link, useNavigate } from "react-router-dom";
 

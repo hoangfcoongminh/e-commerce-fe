@@ -3,6 +3,7 @@
 :root {
   --color-primary: rgb(17, 110, 51);
   --color-secondary: rgb(40, 145, 78);
+  --color-third: rgb(9, 119, 215);
 
   --color-button-bg: rgb(10, 131, 54);
   --color-button-border: rgb(7, 95, 39);
