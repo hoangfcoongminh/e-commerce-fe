@@ -1,22 +1,23 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { useAppDispatch } from "../hooks/redux";
 import { logout } from "../store/authSlice";
 import { toast } from "react-toastify";
 import { LuShoppingCart, LuUser } from "react-icons/lu";
 import { Search } from "./ui/Search";
+import { toggleCart } from "../store/cartSlice";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  const user = useAppSelector((state) => state.auth.user);
 
   const userNav = [
     { name: "Thông tin cá nhân", path: "/profile" },
     { name: "Đơn hàng", path: "/orders" },
   ];
 
+  const handleCartClick = () => {
+    dispatch(toggleCart());
+  };
   const handleLogout = () => {
     dispatch(logout());
     toast.info("Đăng xuất thành công!");
@@ -85,6 +86,7 @@ export const Header = () => {
           <button
             type="button"
             className="flex items-center justify-center w-10 h-10 rounded-full cursor-pointer"
+            onClick={handleCartClick}
           >
             <LuShoppingCart className="text-2xl text-gray-700" />
           </button>

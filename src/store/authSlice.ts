@@ -48,8 +48,9 @@ export const register = createAsyncThunk<
     password: string;
     fullName: string;
     phoneNumber: string;
-    address: string;
+    address: string | null;
     gender: Gender | null;
+    role: Role;
   },
   { rejectValue: ApiError }
 >(

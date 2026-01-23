@@ -1,6 +1,7 @@
 import { LuMinus, LuPlus, LuShoppingBag, LuX } from "react-icons/lu";
 import type { CartItem } from "../types/cartItem";
-import { useAppDispatch } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { closeCart } from "../store/cartSlice";
 
 interface MiniCartProps {
   isOpen: boolean;
@@ -13,7 +14,6 @@ interface MiniCartProps {
 }
 
 export function Cart({
-  onClose,
   cart,
   onRemoveItem,
   onUpdateQuantity,
@@ -21,18 +21,22 @@ export function Cart({
   onCheckout,
 }: MiniCartProps) {
   const dispatch = useAppDispatch();
-  
-  const isOpen = true;
+  const isOpen = useAppSelector((state) => state.cart.isOpen);
+
+  const handleClose = () => {
+    dispatch(closeCart());
+  };
+
   return (
     <>
       {/* Backdrop */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/30 z-40 transition-opacity" onClick={onClose} />
+        <div className="fixed inset-0 bg-black/30 z-40 transition-opacity" onClick={handleClose} />
       )}
 
       {/* Slide-out Cart */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out z-1000 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -44,8 +48,8 @@ export function Cart({
               <h2 className="text-2xl">Shopping Cart</h2>
             </div>
             <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+              onClick={handleClose}
+              className="p-2 hover:bg-gray-200 rounded-lg transition-colors cursor-pointer"
             >
               <LuX className="w-6 h-6" />
             </button>
