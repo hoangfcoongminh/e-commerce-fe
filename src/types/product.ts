@@ -9,6 +9,7 @@ export interface Product {
   realPrice: number;
   stock: number;
   slug: string;
+  promotions:
   images: Image[];
 }
 

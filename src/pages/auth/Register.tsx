@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { register } from "../../store/authSlice";
 import { Gender } from "../../types/gender";
 import { Link, useNavigate } from "react-router-dom";
+import { Role } from "../../types/role";
 
 export default function Register() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ export default function Register() {
           phoneNumber,
           address,
           gender,
+          role: Role.USER,
         })
       ).unwrap();
       toast.success("Đăng ký thành công!");

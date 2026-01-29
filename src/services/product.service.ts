@@ -6,4 +6,7 @@ export const productService = {
   filter(params: { page?: number; size?: number; sort?: string }, body: FilterRequestArgs["body"]) {
     return api.post<ApiResponse<Product[]>>("/products/filter", body, { params });
   },
+  getDetail(slug: string) {
+    return api.post<ApiResponse<Product>>(`/products/${slug}`);
+  }
 };
