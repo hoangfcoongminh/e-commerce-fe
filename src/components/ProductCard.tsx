@@ -32,12 +32,15 @@ export function ProductCard({ product, subCategories, onAddToCart }: ProductCard
       <div className="p-6">
         <h3 className="text-xl mb-2 text-gray-900">{product.name}</h3>
         <div className="">
-          <p className="text-2xl mb-4" style={{ color: "#116E33" }}>
+          <p className="text-2xl mb-4 text-[var(--color-primary)] font-semibold">
             {product.realPrice.toLocaleString("vi-VN")} VND
+            {}
           </p>
-          <p className="text-xl mb-4 line-through" style={{ color: "#116E33" }}>
-            {product.originalPrice.toLocaleString("vi-VN")} VND
-          </p>
+          {product.promotions && (
+            <p className="text-x mb-4 line-through text-[var(--color-primary)]">
+              {product.originalPrice.toLocaleString("vi-VN")} VND
+            </p>
+          )}
         </div>
 
         <button
