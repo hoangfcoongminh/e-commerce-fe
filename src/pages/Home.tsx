@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "../components/ProductCard";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { useEffect } from "react";
 import { filterProducts } from "../store/productSlice";
@@ -24,16 +24,16 @@ export const Home = () => {
     dispatch(fetchAllSubCategories());
   }, [dispatch]);
 
-  const productsWithImages = products.map(p => ({
-  ...p,
-  images: [
-    {
-      id: 0,
-      url: "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZW4lMjBmYXNoaW9uJTIwamFja2V0fGVufDF8fHx8MTc2ODE0NjMwMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      isPrimary: true
-    }
-  ]
-}));
+  const productsWithImages = products.map((p) => ({
+    ...p,
+    images: [
+      {
+        id: 0,
+        url: "https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZW4lMjBmYXNoaW9uJTIwamFja2V0fGVufDF8fHx8MTc2ODE0NjMwMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        isPrimary: true,
+      },
+    ],
+  }));
 
   const categoryCards: CategoryCard[] = [
     {
@@ -168,15 +168,15 @@ export const Home = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {productsWithImages.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                subCategories={subCategories || []}
-                // onAddToCart={onAddToCart}
-              />
-            ))}
-          </div>
+              {productsWithImages.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  subCategories={subCategories || []}
+                  // onAddToCart={onAddToCart}
+                />
+              ))}
+            </div>
           )}
         </div>
       </section>

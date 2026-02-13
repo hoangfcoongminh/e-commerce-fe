@@ -22,7 +22,6 @@ export const fetchAllSubCategories = createAsyncThunk<
 >("subCategories/fetchAll", async (_, { rejectWithValue }) => {
   try {
     const response = await subCategoryService.getAll();
-    console.log("Response: ", response);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response.data as ApiError);

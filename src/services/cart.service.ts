@@ -1,4 +1,5 @@
 import type { ApiResponse } from "../types/api";
+import type { Cart } from "../types/cart";
 import type { CartItem } from "../types/cartItem";
 import api from "./api"
 
@@ -13,7 +14,7 @@ export const cartService = {
         // Logic to update cart item quantity
     },
     getCartItems: () => {
-        return api.get<ApiResponse<CartItem[]>>("/carts");
+        return api.get<ApiResponse<Cart>>("/carts");
     },
     clearCart: () => {
         // Logic to clear the cart

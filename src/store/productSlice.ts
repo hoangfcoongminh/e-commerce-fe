@@ -3,6 +3,7 @@ import { productService } from "../services/product.service";
 import type { ApiError, ApiResponse } from "../types/api";
 import type { Pagination } from "../types/pagination";
 import type { FilterRequestArgs, Product } from "../types/product";
+import type { PageResponse } from "../types/pageResponse";
 
 interface ProductState {
   products: Product[];
@@ -27,7 +28,7 @@ const initialState: ProductState = {
 };
 
 export const filterProducts = createAsyncThunk<
-  ApiResponse<Product[]>,
+  ApiResponse<PageResponse<Product>>,
   FilterRequestArgs,
   { rejectValue: ApiError }
 >("products/filter", async ({ page, size, sort, body }, { rejectWithValue }) => {
@@ -71,7 +72,8 @@ const productSlice = createSlice({
       })
       .addCase(filterProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload.data;
+        state.products = action.payload.data.content;
+        state.pagination = action.payload.data.pagination;
       })
       .addCase(filterProducts.rejected, (state, action) => {
         state.loading = false;

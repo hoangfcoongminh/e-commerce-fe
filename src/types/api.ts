@@ -1,12 +1,9 @@
-import type { Pagination } from "./pagination";
-
 export interface ApiResponse<T> {
   timestamp: string;
   success: boolean;
   status: number;
   url: string;
   data: T;
-  pagination?: Pagination;
 }
 
 export interface ApiError {
